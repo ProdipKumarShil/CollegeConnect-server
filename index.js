@@ -37,7 +37,7 @@ async function run() {
     const collegeDB = client.db("collegeConnect")
     const collegeData = collegeDB.collection("colleges")
     const admissionDB = collegeDB.collection("admission")
-    const studentCollegeData = collegeDB.collection("admission")
+    const feedback = collegeDB.collection("feedback")
     
     await client.db("admin").command({ ping: 1 });
     console.log(
@@ -68,6 +68,17 @@ async function run() {
       }
       else{
         res.send({insert:false})
+      }
+    })
+
+    // post feedback
+    app.post('/feedback', async(req, res) => {
+      const userFeedback = req.body
+      const result = await feedback.insertOne(userFeedback)
+      if (result.insertedId) {
+        res.send({ insert: true });
+      } else {
+        res.send({ insert: false });
       }
     })
 
