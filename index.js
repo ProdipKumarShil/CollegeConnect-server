@@ -36,6 +36,7 @@ async function run() {
 
     const collegeDB = client.db("collegeConnect")
     const collegeData = collegeDB.collection("colleges")
+    const admissionDB = collegeDB.collection("admission")
     
     await client.db("admin").command({ ping: 1 });
     console.log(
@@ -55,6 +56,18 @@ async function run() {
       const query = {_id: new ObjectId(id)};
       const result = await collegeData.findOne(query)
       res.send(result)
+    })
+
+    // post admission data
+    app.post('/admission', async(req, res) => {
+      const admissionData = req.body
+      const result = await admissionDB.insertOne(admissionData)
+      if(result.insertedId){
+        res.send({insert: true})
+      }
+      else{
+        res.send({insert:false})
+      }
     })
 
   } finally {
