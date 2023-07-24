@@ -37,6 +37,7 @@ async function run() {
     const collegeDB = client.db("collegeConnect")
     const collegeData = collegeDB.collection("colleges")
     const admissionDB = collegeDB.collection("admission")
+    const studentCollegeData = collegeDB.collection("admission")
     
     await client.db("admin").command({ ping: 1 });
     console.log(
@@ -68,6 +69,13 @@ async function run() {
       else{
         res.send({insert:false})
       }
+    })
+
+    app.get('/myCollege/:email', async(req, res) => {
+      const email = req.params.email
+      const query = {email: email}
+      const result = await admissionDB.find(query).toArray()
+      res.send(result)
     })
 
   } finally {
