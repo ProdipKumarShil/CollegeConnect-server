@@ -82,6 +82,11 @@ async function run() {
       }
     })
 
+    app.get('/allFeedback', async(req, res) => {
+      const result = await feedback.find().toArray()
+      res.send(result)
+    })
+
     app.get('/myCollege/:email', async(req, res) => {
       const email = req.params.email
       const query = {email: email}
