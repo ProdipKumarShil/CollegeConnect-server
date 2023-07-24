@@ -38,6 +38,7 @@ async function run() {
     const collegeData = collegeDB.collection("colleges")
     const admissionDB = collegeDB.collection("admission")
     const feedback = collegeDB.collection("feedback")
+    const user = collegeDB.collection("userDb")
     
     await client.db("admin").command({ ping: 1 });
     console.log(
@@ -93,6 +94,14 @@ async function run() {
       const result = await admissionDB.find(query).toArray()
       res.send(result)
     })
+
+
+    /** add here user post method. when user signup then post user data in mongo server **/
+    
+    // app.post('/user', async(req, res) => {
+    //   const userData = req.body
+    //   console.log(userData)
+    // })
 
   } finally {
     // Ensures that the client will close when you finish/error
